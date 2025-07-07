@@ -10,7 +10,7 @@
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
     --business-glow: 0px 0px 4px rgba(58, 130, 238, 0.75);
-    --personal-glow: 0px 0px 2px rgb(208, 49, 45, 0.75);
+    --personal-glow: 0px 0px 2px rgba(208, 49, 45, 0.75);
 }
 
 * {
@@ -36,9 +36,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    /* Hide overflow to prevent scrollbars */
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 1rem;
 }
 
 .video-bg {
@@ -48,16 +48,15 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* Place behind other elements */
     object-fit: cover;
-    /* Cover the entire viewport */
 }
 
 section {
     margin-top: 2rem;
     margin-bottom: 2rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding: 1.5rem;
+    max-width: 700px;
+    width: 100%;
 }
 
 .other {
@@ -75,12 +74,14 @@ h4 {
 
 .greeting .title {
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .greeting .title input {
-    margin-left: 0.5rem;
-    flex: 1 1 0%;
+    flex: 1 1 100%;
     min-width: 0;
+    margin-left: 0;
 }
 
 .greeting .title,
@@ -91,7 +92,6 @@ h4 {
 }
 
 .create-todo input[type="text"] {
-    display: block;
     width: 100%;
     font-size: 1.125rem;
     padding: 1rem 1.5rem;
@@ -104,8 +104,8 @@ h4 {
 
 .create-todo .options {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
@@ -119,6 +119,7 @@ h4 {
     box-shadow: var(--shadow);
     border-radius: 0.5rem;
     cursor: pointer;
+    text-align: center;
 }
 
 input[type="radio"],
@@ -135,13 +136,11 @@ input[type="checkbox"] {
     border-radius: 999px;
     border: 2px solid var(--business);
     box-shadow: var(--business-glow), 0 0 8px rgba(58, 130, 238, 0.5);
-    /* Increase the glow effect */
 }
 
 .bubble.personal {
     border-color: var(--personal);
     box-shadow: var(--personal-glow), 0 0 8px rgba(208, 49, 45, 0.5);
-    /* Increase the glow effect */
 }
 
 .bubble::after {
@@ -161,15 +160,14 @@ input[type="checkbox"] {
     box-shadow: var(--personal-glow);
 }
 
-input:checked~.bubble::after {
+input:checked ~ .bubble::after {
     width: 10px;
     height: 10px;
     opacity: 1;
 }
 
-
 .create-todo .options label div {
-    columns: var(--dark);
+    color: var(--dark);
     font-size: 1.125rem;
     margin-top: 1rem;
 }
@@ -197,7 +195,8 @@ input:checked~.bubble::after {
 
 .todo-list .todo-item {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
     background-color: whitesmoke;
     padding: 1rem;
     border-radius: 0.5rem;
@@ -206,27 +205,27 @@ input:checked~.bubble::after {
 }
 
 .todo-item label {
-    display: block;
     margin-right: 1rem;
     cursor: pointer;
 }
 
 .todo-item .todo-content {
-    flex: 1 1 0%;
+    flex: 1 1 100%;
 }
 
 .todo-item .todo-content input {
-    color: var(--dark);
+    width: 100%;
     font-size: 1.125rem;
+    color: var(--dark);
 }
 
 .todo-item .actions {
     display: flex;
-    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .todo-item .actions button {
-    display: block;
     padding: 0.5rem;
     border-radius: 0.25rem;
     color: whitesmoke;
@@ -239,16 +238,45 @@ input:checked~.bubble::after {
 }
 
 .todo-item .actions .edit {
-    margin-right: 0.5rem;
     background-color: var(--primary);
 }
 
 .todo-item .actions .delete {
-    margin-right: 0.5rem;
     background-color: var(--danger);
 }
 
 .todo-item.done .todo-content input {
     text-decoration: line-through;
-    color: var(--grey);
+    color: grey;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+    .greeting .title {
+        flex-direction: column;
+    }
+
+    .create-todo .options {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h4 {
+        font-size: 0.75rem;
+    }
+
+    .create-todo input[type="text"],
+    .create-todo input[type="submit"] {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .todo-item .todo-content input {
+        font-size: 1rem;
+    }
 }
